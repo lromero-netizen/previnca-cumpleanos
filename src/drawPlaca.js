@@ -1,6 +1,6 @@
 import { MESES, placaNombre } from './utils'
 
-export function drawPlaca(canvas, rows, mes) {
+export function drawPlaca(canvas, rows, mes, onReady) {
   const ctx = canvas.getContext("2d")
   const W = canvas.width
   const H = canvas.height
@@ -56,11 +56,28 @@ export function drawPlaca(canvas, rows, mes) {
     }
 
     const url = canvas.toDataURL("image/jpeg", 0.92)
-    const event = new CustomEvent("placaReady", { detail: url })
-    window.dispatchEvent(event)
+    onReady(url)
   }
 
   img.onerror = () => {
-    console.error("No se pudo cargar la imagen de fondo")
+    // Si no carga la imagen, genera placa con fondo degradado
+    ctx.clearRect(0, 0, W, H)
+    const bg = ctx.createLinearGradient(0, 0, 0, H)
+    bg.addColorStop(0, "#0e1840")
+    bg.addColorStop(0.45, "#15246b")
+    bg.addColorStop(1, "#1b2f86")
+    ctx.fillStyle = bg
+    ctx.fillRect(0, 0, W, H)
+    ctx.fillStyle = "#ffb84d"
+    ctx.fillRect(0, 0, W, 8)
+    ctx.textAlign = "center"
+    ctx.fillStyle = "rgba(255,255,255,.7)"
+    ctx.font = "600 28px 'Plus Jakarta Sans', sans-serif"
+    ctx.fillText("CUMPLEAÑOS DE", W / 2, 80)
+    ctx.fillStyle = "#ffb84d"
+    ctx.font = "800 72px 'Bricolage Grotesque', sans-serif"
+    ctx.fillText(MESES[mes].toUpperCase(), W / 2, 162)
+    const url = canvas.toDataURL("image/jpeg", 0.92)
+    onReady(url)
   }
 }

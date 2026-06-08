@@ -213,12 +213,11 @@ export default function App() {
   }
 
   function handleGenerar() {
-    window.addEventListener("placaReady", (e) => {
-      setPlacaUrl(e.detail)
-      setStepDone(5)
-    }, { once: true })
-    drawPlaca(canvasRef.current, rows, mes)
-  }
+  drawPlaca(canvasRef.current, rows, mes, (url) => {
+    setPlacaUrl(url)
+    setStepDone(5)
+  })
+}
 
   function handleDescargar() {
     const a = document.createElement("a")
