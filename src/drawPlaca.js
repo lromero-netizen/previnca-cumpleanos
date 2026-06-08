@@ -24,7 +24,15 @@ export function drawPlaca(canvas, rows, mes, onReady) {
     const top = 200
     const bottom = H * 0.52
     const areaH = bottom - top
-
+// Título
+    ctx.textAlign = "center"
+    ctx.font = "600 36px 'Plus Jakarta Sans', sans-serif"
+    ctx.fillStyle = "rgba(255,255,255,.85)"
+    ctx.fillText("CUMPLEAÑOS DE", W / 2, 120)
+    ctx.font = "800 64px 'Bricolage Grotesque', sans-serif"
+    ctx.fillStyle = "#ffb84d"
+    ctx.fillText(MESES[mes].toUpperCase(), W / 2, 190)
+    
     if (n > 0) {
       const cols = n > 8 ? 2 : 1
       const perCol = Math.ceil(n / cols)
