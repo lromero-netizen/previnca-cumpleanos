@@ -154,10 +154,13 @@ export default function App() {
     setAccepted(false)
   }
 
-  function handleAccept() {
-    setAccepted(true); setStepActive(5); setStepDone(4)
-    setTimeout(()=>placaRef.current?.scrollIntoView({behavior:"smooth",block:"start"}),100)
-  }
+  function handleGenerar() {
+  window.addEventListener("placaReady", (e) => {
+    setPlacaUrl(e.detail)
+    setStepDone(5)
+  }, { once: true })
+  drawPlaca(canvasRef.current, rows, mes)
+}
 
   function handleGenerar() {
     const url=drawPlaca(canvasRef.current,rows,mes); setPlacaUrl(url); setStepDone(5)
